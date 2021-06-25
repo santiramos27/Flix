@@ -25,43 +25,27 @@
     [super viewDidLoad];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    [self.activityIndicator startAnimating];
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Title"message:@"Message"preferredStyle:(UIAlertControllerStyleAlert)];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    // handle cancel response here. Doing nothing will dismiss the view.
-    }];
-    // add the cancel action to the alertController
-    [alert addAction:cancelAction];
 
-    // create an OK action
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    // handle response here.
-    }];
-    // add the OK action to the alert controller
-    [alert addAction:okAction];
-    
     [self fetchMovies];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
+    [self.tableView insertSubview:self.refreshControl atIndex:0];
     
    
 }
 
 - (void)fetchMovies{
-    
+    [self.activityIndicator startAnimating];
     NSURL *url = [NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
            if (error != nil) {
                NSLog(@"%@", [error localizedDescription]);
-               if([[error localizedDescription] isEqual:]@"The Internet connection appears to be offline." ){
-                   NSLog(@"ayo");
+               if([[error localizedDescription] isEqual:@"The Internet connection appears to be offline."] ){
+                   [self displayError];
                }
-               NSLog(@"hello");
            }
            else {
                NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
@@ -76,6 +60,21 @@
         [self.activityIndicator stopAnimating];
        }];
     [task resume];
+}
+
+- (void) displayError{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Cannot Get Movies"message:@"The internet connection appears to be offline."preferredStyle:(UIAlertControllerStyleAlert)];
+    UIAlertAction *tryAgainAction = [UIAlertAction actionWithTitle:@"Try Again"style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    // handle cancel response here. Doing nothing will dismiss the view.
+        [self fetchMovies];
+    }];
+    // add the cancel action to the alertController
+    [alert addAction:tryAgainAction];
+    
+    [self presentViewController:alert animated:YES completion:^{
+        // optional code for what happens after the alert controller has finished presenting
+    }];
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
