@@ -2,7 +2,7 @@
 
 Flix is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: 10 hours spent in total
+Time spent: 15 hours spent in total
 
 ## User Stories
 
@@ -11,23 +11,23 @@ The following **required** functionality is complete:
 - [X] User sees an app icon on the home screen and a styled launch screen.
 - [X] User can view a list of movies currently playing in theaters from The Movie Database.
 - [X] Poster images are loaded using the UIImageView category in the AFNetworking library.
-- [X] User sees a loading state while waiting for the movies API.
-- [X] User can pull to refresh the movie list.
-- [X] User sees an error message when there's a networking error.
-- [ ] User can tap a tab bar button to view a grid layout of Movie Posters using a CollectionView.
+- [x] User sees a loading state while waiting for the movies API.
+- [x] User can pull to refresh the movie list.
+- [x] User sees an error message when there's a networking error.
+- [x] User can tap a tab bar button to view a grid layout of Movie Posters using a CollectionView.
 
 The following **optional** features are implemented:
 
-- [ ] User can tap a poster in the collection view to see a detail screen of that movie
+- [x] User can tap a poster in the collection view to see a detail screen of that movie
 - [ ] User can search for a movie.
-- [ ] All images fade in as they are loading.
+- [x] All images fade in as they are loading.
 - [ ] User can view the large movie poster by tapping on a cell.
 - [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
 - [ ] Customize the selection effect of the cell.
 - [ ] Customize the navigation bar.
 - [ ] Customize the UI.
 - [ ] User can view the app on various device sizes and orientations.
-- [ ] Run your app on a real device.
+- [X] Run your app on a real device.
 
 The following **additional** features are implemented:
 
@@ -35,20 +35,20 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Implementing the trailer viewing functionality in the same view controller as the movie details
+2. How to best choose a color scheme for design-oriented purposes (blocks, fonts, borders, etc)
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
 
 GIF created with [Kap](https://getkap.co/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I was stuck for a while trying to format the collection view cells appropriately before realizing I needed to set the 'estimate size' property to 'none'. This was my only major roadblock.
 
 ## Credits
 
